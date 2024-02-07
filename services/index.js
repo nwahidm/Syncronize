@@ -380,17 +380,14 @@ async function CreatePrapenuntutanJaksa(penuntutanData) {
   }
 }
 
-async function GetLapdumas(lapdumasData) {
-  const { limit, offsett } = lapdumasData;
-  log("[Integration] GetLapdumas", lapdumasData);
+async function GetLapdumas(user) {
+  log("[Integration] GetLapdumas", user);
   try {
     const data = await tbl_lapdumas.findAll({
       include: {
         model: tbl_lapdumas_files,
         as: "files",
       },
-      limit,
-      offsett,
       nest: true,
     });
 
@@ -400,9 +397,8 @@ async function GetLapdumas(lapdumasData) {
   }
 }
 
-async function GetPenyelidikan(penyelidikanData) {
-  const { limit, offsett } = penyelidikanData;
-  log("[Integration] GetPenyelidikan", penyelidikanData);
+async function GetPenyelidikan(user) {
+  log("[Integration] GetPenyelidikan", user);
   try {
     const data = await tbl_penyelidikan.findAll({
       include: [
@@ -415,8 +411,6 @@ async function GetPenyelidikan(penyelidikanData) {
           as: "penyelidikan_jaksa",
         },
       ],
-      limit,
-      offsett,
       nest: true,
     });
 
@@ -426,9 +420,8 @@ async function GetPenyelidikan(penyelidikanData) {
   }
 }
 
-async function GetPenyidikan(penyidikanData) {
-  const { limit, offsett } = penyidikanData;
-  log("[Integration] GetPenyidikan", penyidikanData);
+async function GetPenyidikan(user) {
+  log("[Integration] GetPenyidikan", user);
   try {
     const data = await tbl_penyidikan.findAll({
       include: [
@@ -441,8 +434,6 @@ async function GetPenyidikan(penyidikanData) {
           as: "penyidikan_jaksa",
         },
       ],
-      limit,
-      offsett,
       nest: true,
     });
 
@@ -452,9 +443,8 @@ async function GetPenyidikan(penyidikanData) {
   }
 }
 
-async function GetPrapenuntutan(prapenuntutanData) {
-  const { limit, offsett } = prapenuntutanData;
-  log("[Integration] GetPrapenuntutan", prapenuntutanData);
+async function GetPrapenuntutan(user) {
+  log("[Integration] GetPrapenuntutan", user);
   try {
     const data = await tbl_prapenuntutan.findAll({
       include: [
@@ -467,8 +457,6 @@ async function GetPrapenuntutan(prapenuntutanData) {
           as: "prapenuntutan_jaksa",
         },
       ],
-      limit,
-      offsett,
       nest: true,
     });
 
@@ -478,14 +466,21 @@ async function GetPrapenuntutan(prapenuntutanData) {
   }
 }
 
-async function GetJaksaPenyelidikan(jaksaPenyelidikanData) {
-  const { limit, offsett } = jaksaPenyelidikanData;
-  log("[Integration] GetJaksaPenyelidikan", jaksaPenyelidikanData);
+async function GetPenyidikan(user) {
+  log("[Integration] GetPenyidikan", user);
   try {
-    const data = await tbl_penyelidikan_jaksa.findAll({
-      raw: true,
-      limit,
-      offsett,
+    const data = await tbl_penyidikan.findAll({
+      include: [
+        {
+          model: tbl_penyidikan_files,
+          as: "files",
+        },
+        {
+          model: tbl_penyidikan_jaksa,
+          as: "penyidikan_jaksa",
+        },
+      ],
+      nest: true,
     });
 
     return data;
@@ -494,15 +489,10 @@ async function GetJaksaPenyelidikan(jaksaPenyelidikanData) {
   }
 }
 
-async function GetJaksaPenyidikan(jaksaPenyidikanData) {
-  const { limit, offsett } = jaksaPenyidikanData;
-  log("[Integration] GetJaksaPenyidikan", jaksaPenyidikanData);
+async function GetJaksaPenyelidikan() {
+  log("[Integration] GetJaksaPenyelidikan");
   try {
-    const data = await tbl_penyidikan_jaksa.findAll({
-      raw: true,
-      limit,
-      offsett,
-    });
+    const data = await tbl_penyelidikan_jaksa.findAll({ raw: true });
 
     return data;
   } catch (error) {
@@ -510,16 +500,21 @@ async function GetJaksaPenyidikan(jaksaPenyidikanData) {
   }
 }
 
-async function GetJaksaPrapenuntutan(jaksaPrapenuntutanData) {
-  const { limit, offsett } = jaksaPrapenuntutanData;
-
-  log("[Integration] GetJaksaPrapenuntutan", jaksaPrapenuntutanData);
+async function GetJaksaPenyidikan() {
+  log("[Integration] GetJaksaPenyidikan");
   try {
-    const data = await tbl_prapenuntutan_jaksa.findAll({
-      raw: true,
-      limit,
-      offsett,
-    });
+    const data = await tbl_penyidikan_jaksa.findAll({ raw: true });
+
+    return data;
+  } catch (error) {
+    return error;
+  }
+}
+
+async function GetJaksaPrapenuntutan() {
+  log("[Integration] GetJaksaPrapenuntutan");
+  try {
+    const data = await tbl_prapenuntutan_jaksa.findAll({ raw: true });
 
     return data;
   } catch (error) {

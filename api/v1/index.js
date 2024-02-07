@@ -216,10 +216,10 @@ router.post("/prapenuntutan/jaksa", async (req, res) => {
   }
 });
 
-router.post("/lapdumas", [isVerified], async (req, res) => {
-  const lapdumasData = req.body;
+router.get("/lapdumas", [isVerified], async (req, res) => {
+  const user = req.user;
 
-  const result = await IndexService.GetLapdumas(lapdumasData);
+  const result = await IndexService.GetLapdumas(user);
   log("result", result);
 
   if (result.error) {
@@ -235,10 +235,10 @@ router.post("/lapdumas", [isVerified], async (req, res) => {
   }
 });
 
-router.post("/penyelidikan", [isVerified], async (req, res) => {
-  const penyelidikanData = req.body;
+router.get("/penyelidikan", [isVerified], async (req, res) => {
+  const user = req.user;
 
-  const result = await IndexService.GetPenyelidikan(penyelidikanData);
+  const result = await IndexService.GetPenyelidikan(user);
   log("result", result);
 
   if (result.error) {
@@ -254,10 +254,10 @@ router.post("/penyelidikan", [isVerified], async (req, res) => {
   }
 });
 
-router.post("/penyidikan", [isVerified], async (req, res) => {
-  const penyidikanData = req.body;
+router.get("/penyidikan", [isVerified], async (req, res) => {
+  const user = req.user;
 
-  const result = await IndexService.GetPenyidikan(penyidikanData);
+  const result = await IndexService.GetPenyidikan(user);
   log("result", result);
 
   if (result.error) {
@@ -273,10 +273,10 @@ router.post("/penyidikan", [isVerified], async (req, res) => {
   }
 });
 
-router.post("/prapenuntutan", [isVerified], async (req, res) => {
-  const prapenuntutanData = req.body;
+router.get("/prapenuntutan", [isVerified], async (req, res) => {
+  const user = req.user;
 
-  const result = await IndexService.GetPrapenuntutan(prapenuntutanData);
+  const result = await IndexService.GetPrapenuntutan(user);
   log("result", result);
 
   if (result.error) {
@@ -292,10 +292,8 @@ router.post("/prapenuntutan", [isVerified], async (req, res) => {
   }
 });
 
-router.post("/jaksa_penyelidikan", [isVerified], async (req, res) => {
-  const jaksaPenyelidikanData = req.body;
-
-  const result = await IndexService.GetJaksaPenyelidikan(jaksaPenyelidikanData);
+router.get("/jaksa_penyelidikan", [isVerified], async (req, res) => {
+  const result = await IndexService.GetJaksaPenyelidikan();
   log("result", result);
 
   if (result.error) {
@@ -311,10 +309,8 @@ router.post("/jaksa_penyelidikan", [isVerified], async (req, res) => {
   }
 });
 
-router.post("/jaksa_penyidikan", [isVerified], async (req, res) => {
-  const jaksaPenyidikanData = req.body;
-
-  const result = await IndexService.GetJaksaPenyidikan(jaksaPenyidikanData);
+router.get("/jaksa_penyidikan", [isVerified], async (req, res) => {
+  const result = await IndexService.GetJaksaPenyidikan();
   log("result", result);
 
   if (result.error) {
@@ -330,12 +326,8 @@ router.post("/jaksa_penyidikan", [isVerified], async (req, res) => {
   }
 });
 
-router.post("/jaksa_prapenuntutan", [isVerified], async (req, res) => {
-  const jaksaPrapenuntutanData = req.body;
-
-  const result = await IndexService.GetJaksaPrapenuntutan(
-    jaksaPrapenuntutanData
-  );
+router.get("/jaksa_prapenuntutan", [isVerified], async (req, res) => {
+  const result = await IndexService.GetJaksaPrapenuntutan();
   log("result", result);
 
   if (result.error) {
